@@ -36,8 +36,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+        buildTypes {
+        debug {
+            def CONFIG = { k -> "\"${project.properties.get(k)}\"" }
+            buildConfigField "String", "APP_CENTER_SECRET", CONFIG('"APP_CENTER_SECRET"')
+        }
         release {
+            buildConfigField "String", "APP_CENTER_SECRET", "\"${System.env.APP_CENTER_SECRET}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -64,4 +69,8 @@ dependencies {
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+
+    def appCenterSdkVersion = '2.4.1'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }
