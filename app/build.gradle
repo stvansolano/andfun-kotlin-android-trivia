@@ -36,10 +36,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-        buildTypes {
+
+    def gradleProperties = { k -> project.properties.get(k).toString() }
+
+    buildTypes {
         debug {
-            def CONFIG = { k -> "\"${project.properties.get(k)}\"" }
-            buildConfigField "String", "APP_CENTER_SECRET", CONFIG('"APP_CENTER_SECRET"')
+            buildConfigField "String", "APP_CENTER_SECRET", gradleProperties('APP_CENTER_SECRET')
         }
         release {
             buildConfigField "String", "APP_CENTER_SECRET", "\"${System.env.APP_CENTER_SECRET}\""
