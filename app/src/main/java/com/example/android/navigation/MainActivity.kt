@@ -18,6 +18,8 @@ package com.example.android.navigation
 
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -26,10 +28,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
 import com.microsoft.appcenter.crashes.Crashes
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.AppCenter
-
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +58,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
+
+        try {
+            var navigation = findViewById<NavigationView>(R.id.navView)
+
+            navigation.getHeaderView(0)
+                      .findViewById<ImageView>(R.id.navHeaderImage)
+                      .setOnClickListener(View.OnClickListener {
+
+                Crashes.generateTestCrash();
+
+                throw Exception("Ooops");
+            })
+        }
+        catch (ex: Exception){
+
+            //val currentTime = Calendar.getInstance().getTime()
+            val properties = mapOf(ex.message to "Error")
+
+            Analytics.trackEvent("Caught error", properties);
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
