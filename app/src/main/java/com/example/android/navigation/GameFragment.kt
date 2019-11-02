@@ -25,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameBinding
+import com.microsoft.appcenter.analytics.Analytics
 
 class GameFragment : Fragment() {
     data class Question(
@@ -89,6 +90,9 @@ class GameFragment : Fragment() {
                 // The first answer in the original question is always the correct one, so if our
                 // answer matches, we have the correct answer.
                 if (answers[answerIndex] == currentQuestion.answers[0]) {
+
+                    Analytics.trackEvent("Correct answer - Question:" + currentQuestion.text);
+
                     questionIndex++
                     // Advance to the next question
                     if (questionIndex < numQuestions) {
@@ -100,6 +104,8 @@ class GameFragment : Fragment() {
                         view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions,questionIndex))
                     }
                 } else {
+                    Analytics.trackEvent("Incorrect answer - Question:" + currentQuestion.text);
+
                     // Game over! A wrong answer sends us to the gameOverFragment.
                     view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment())
                 }

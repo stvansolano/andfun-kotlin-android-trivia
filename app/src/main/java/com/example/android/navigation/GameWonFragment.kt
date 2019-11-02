@@ -33,7 +33,7 @@ import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 import android.content.pm.ResolveInfo
 import android.content.pm.PackageManager
-
+import com.microsoft.appcenter.analytics.Analytics
 
 
 class GameWonFragment : Fragment() {
@@ -59,6 +59,8 @@ class GameWonFragment : Fragment() {
     }
 
     private fun shareSuccess() {
+        Analytics.trackEvent("Shared Success");
+
         startActivity(getShareIntent())
     }
 
