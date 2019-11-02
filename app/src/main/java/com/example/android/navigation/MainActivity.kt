@@ -43,9 +43,10 @@ class MainActivity : AppCompatActivity() {
         AppCenter.start(application, BuildConfig.APP_CENTER_SECRET,
         Analytics::class.java, Crashes::class.java)
 
-        AppCenter.setUserId("anonymous");
+        AppCenter.setUserId("anonymous")
 
-        super.onCreate(savedInstanceState)
+        super.onCreated(savedInstanceState)
+        
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.myNavHostFragment)
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         try {
-            var navigation = findViewById<NavigationView>(R.id.navView)
+            var navigation = findViewById<NavigationView>(R.id.navView);
 
             navigation.getHeaderView(0)
                       .findViewById<ImageView>(R.id.navHeaderImage)
