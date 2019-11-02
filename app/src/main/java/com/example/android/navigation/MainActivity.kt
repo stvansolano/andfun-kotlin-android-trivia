@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         AppCenter.start(application, BuildConfig.APP_CENTER_SECRET,
         Analytics::class.java, Crashes::class.java)
 
+        AppCenter.setUserId("anonymous");
+
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
